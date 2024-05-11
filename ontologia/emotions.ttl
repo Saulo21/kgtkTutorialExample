@@ -1,0 +1,300 @@
+@prefix : <https://www.gsi.upm.es/ontologies/audit-mls#> .
+@prefix mls: <http://www.w3.org/ns/mls#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <https://www.gsi.upm.es/ontologies/audit-mls#> .
+
+<https://www.gsi.upm.es/ontologies/audit-mls> rdf:type owl:Ontology ;
+                                               owl:versionIRI <https://www.gsi.upm.es/ontologies/audit-mls/1.0> ;
+                                               owl:imports <http://www.w3.org/2016/03/mls#> .
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  https://www.gsi.upm.es/ontologies/audit-mls#belongsToDataset
+:belongsToDataset rdf:type owl:ObjectProperty ;
+                  owl:inverseOf :hasFeature ;
+                  rdfs:domain mls:Feature ;
+                  rdfs:range mls:Dataset .
+
+
+###  https://www.gsi.upm.es/ontologies/audit-mls#hasFeature
+:hasFeature rdf:type owl:ObjectProperty ;
+            rdfs:domain mls:Dataset ;
+            rdfs:range mls:Feature .
+
+
+###  https://www.gsi.upm.es/ontologies/audit-mls#hasTargetFeature
+:hasTargetFeature rdf:type owl:ObjectProperty ;
+                  rdfs:subPropertyOf :hasFeature .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  https://www.gsi.upm.es/ontologies/audit-mls#categoryName
+:categoryName rdf:type owl:DatatypeProperty ;
+              rdfs:domain :Category ;
+              rdfs:range xsd:string .
+
+
+###  https://www.gsi.upm.es/ontologies/audit-mls#categoryNumberofInstances
+:categoryNumberofInstances rdf:type owl:DatatypeProperty ;
+                           rdfs:domain :Category ;
+                           rdfs:range xsd:int .
+
+
+###  https://www.gsi.upm.es/ontologies/audit-mls#datasetName
+:datasetName rdf:type owl:DatatypeProperty ;
+             rdfs:domain mls:Dataset ;
+             rdfs:range xsd:string .
+
+
+###  https://www.gsi.upm.es/ontologies/audit-mls#featureName
+:featureName rdf:type owl:DatatypeProperty ;
+             rdfs:domain mls:Feature ;
+             rdfs:range xsd:string .
+
+
+###  https://www.gsi.upm.es/ontologies/audit-mls#rangeMaxValue
+:rangeMaxValue rdf:type owl:DatatypeProperty ;
+               rdfs:domain :NumericalRange .
+
+
+###  https://www.gsi.upm.es/ontologies/audit-mls#rangeMinValue
+:rangeMinValue rdf:type owl:DatatypeProperty ;
+               rdfs:domain :NumericalRange .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  https://www.gsi.upm.es/ontologies/audit-mls#CategoricalFeature
+:CategoricalFeature rdf:type owl:Class ;
+                    owl:equivalentClass [ owl:intersectionOf ( [ rdf:type owl:Restriction ;
+                                                                 owl:onProperty mls:hasQuality ;
+                                                                 owl:someValuesFrom :Category
+                                                               ]
+                                                               [ rdf:type owl:Restriction ;
+                                                                 owl:onProperty mls:hasQuality ;
+                                                                 owl:someValuesFrom :NumberOfCategories
+                                                               ]
+                                                             ) ;
+                                          rdf:type owl:Class
+                                        ] ;
+                    rdfs:subClassOf mls:Feature .
+
+
+###  https://www.gsi.upm.es/ontologies/audit-mls#Category
+:Category rdf:type owl:Class ;
+          rdfs:subClassOf mls:FeatureCharacteristic .
+
+
+###  https://www.gsi.upm.es/ontologies/audit-mls#NumberOfCategories
+:NumberOfCategories rdf:type owl:Class ;
+                    rdfs:subClassOf mls:FeatureCharacteristic .
+
+
+###  https://www.gsi.upm.es/ontologies/audit-mls#NumberOfFeatures
+:NumberOfFeatures rdf:type owl:Class ;
+                  rdfs:subClassOf mls:DatasetCharacteristic .
+
+
+###  https://www.gsi.upm.es/ontologies/audit-mls#NumberOfInstances
+:NumberOfInstances rdf:type owl:Class ;
+                   rdfs:subClassOf mls:DatasetCharacteristic .
+
+
+###  https://www.gsi.upm.es/ontologies/audit-mls#NumberOfUniqueValues
+:NumberOfUniqueValues rdf:type owl:Class ;
+                      rdfs:subClassOf mls:FeatureCharacteristic .
+
+
+###  https://www.gsi.upm.es/ontologies/audit-mls#NumericalFeature
+:NumericalFeature rdf:type owl:Class ;
+                  owl:equivalentClass [ rdf:type owl:Restriction ;
+                                        owl:onProperty mls:hasQuality ;
+                                        owl:someValuesFrom :NumericalRange
+                                      ] ;
+                  rdfs:subClassOf mls:Feature .
+
+
+###  https://www.gsi.upm.es/ontologies/audit-mls#NumericalRange
+:NumericalRange rdf:type owl:Class ;
+                rdfs:subClassOf mls:FeatureCharacteristic .
+
+
+###  https://www.gsi.upm.es/ontologies/audit-mls#TextualFeature
+:TextualFeature rdf:type owl:Class ;
+                owl:equivalentClass [ rdf:type owl:Restriction ;
+                                      owl:onProperty mls:hasQuality ;
+                                      owl:someValuesFrom :NumberOfUniqueValues
+                                    ] ;
+                rdfs:subClassOf mls:Feature .
+
+
+#################################################################
+#    Individuals
+#################################################################
+
+###  https://www.gsi.upm.es/ontologies/audit-mls#category01_feature03
+:category01_feature03 rdf:type owl:NamedIndividual ,
+                               :Category ;
+                      :categoryName "hate" ;
+                      :categoryNumberofInstances "15267"^^xsd:int .
+
+
+###  https://www.gsi.upm.es/ontologies/audit-mls#category02_feature03
+:category02_feature03 rdf:type owl:NamedIndividual ,
+                               :Category ;
+                      :categoryName "neutral" ;
+                      :categoryNumberofInstances "674338"^^xsd:int .
+
+
+###  https://www.gsi.upm.es/ontologies/audit-mls#category03_feature03
+:category03_feature03 rdf:type owl:NamedIndividual ,
+                               :Category ;
+                      :categoryName "anger" ;
+                      :categoryNumberofInstances "12336"^^xsd:int .
+
+
+###  https://www.gsi.upm.es/ontologies/audit-mls#category04_feature03
+:category04_feature03 rdf:type owl:NamedIndividual ,
+                               :Category ;
+                      :categoryName "love" ;
+                      :categoryNumberofInstances "39553"^^xsd:int .
+
+
+###  https://www.gsi.upm.es/ontologies/audit-mls#category05_feature03
+:category05_feature03 rdf:type owl:NamedIndividual ,
+                               :Category ;
+                      :categoryName "worry" ;
+                      :categoryNumberofInstances "4475"^^xsd:int .
+
+
+###  https://www.gsi.upm.es/ontologies/audit-mls#category06_feature03
+:category06_feature03 rdf:type owl:NamedIndividual ,
+                               :Category ;
+                      :categoryName "relief" ;
+                      :categoryNumberofInstances "16729"^^xsd:int .
+
+
+###  https://www.gsi.upm.es/ontologies/audit-mls#category07_feature03
+:category07_feature03 rdf:type owl:NamedIndividual ,
+                               :Category ;
+                      :categoryName "happiness" ;
+                      :categoryNumberofInstances "27175"^^xsd:int .
+
+
+###  https://www.gsi.upm.es/ontologies/audit-mls#category08_feature03
+:category08_feature03 rdf:type owl:NamedIndividual ,
+                               :Category ;
+                      :categoryName "fun" ;
+                      :categoryNumberofInstances "10075"^^xsd:int .
+
+
+###  https://www.gsi.upm.es/ontologies/audit-mls#category09_feature03
+:category09_feature03 rdf:type owl:NamedIndividual ,
+                               :Category ;
+                      :categoryName "empty" ;
+                      :categoryNumberofInstances "5542"^^xsd:int .
+
+
+###  https://www.gsi.upm.es/ontologies/audit-mls#category10_feature03
+:category10_feature03 rdf:type owl:NamedIndividual ,
+                               :Category ;
+                      :categoryName "enthusiasm" ;
+                      :categoryNumberofInstances "9304"^^xsd:int .
+
+
+###  https://www.gsi.upm.es/ontologies/audit-mls#category11_feature03
+:category11_feature03 rdf:type owl:NamedIndividual ,
+                               :Category ;
+                      :categoryName "sadness" ;
+                      :categoryNumberofInstances "17481"^^xsd:int .
+
+
+###  https://www.gsi.upm.es/ontologies/audit-mls#category12_feature03
+:category12_feature03 rdf:type owl:NamedIndividual ,
+                               :Category ;
+                      :categoryName "surprise" ;
+                      :categoryNumberofInstances "6954"^^xsd:int .
+
+
+###  https://www.gsi.upm.es/ontologies/audit-mls#category13_feature03
+:category13_feature03 rdf:type owl:NamedIndividual ,
+                               :Category ;
+                      :categoryName "boredom" ;
+                      :categoryNumberofInstances "126"^^xsd:int .
+
+
+###  https://www.gsi.upm.es/ontologies/audit-mls#characteristic01_dataset01
+:characteristic01_dataset01 rdf:type owl:NamedIndividual ,
+                                     :NumberOfFeatures ;
+                            mls:hasValue "3"^^xsd:int .
+
+
+###  https://www.gsi.upm.es/ontologies/audit-mls#characteristic01_feature01
+:characteristic01_feature01 rdf:type owl:NamedIndividual ,
+                                     :NumericalRange ;
+                            :rangeMaxValue "1000"^^xsd:int ;
+                            :rangeMinValue "1"^^xsd:int .
+
+
+###  https://www.gsi.upm.es/ontologies/audit-mls#characteristic01_feature02
+:characteristic01_feature02 rdf:type owl:NamedIndividual ,
+                                     :NumberOfUniqueValues ;
+                            mls:hasValue "393822"^^xsd:int .
+
+
+###  https://www.gsi.upm.es/ontologies/audit-mls#characteristic01_feature03
+:characteristic01_feature03 rdf:type owl:NamedIndividual ,
+                                     :NumberOfCategories ;
+                            mls:hasValue "13"^^xsd:int .
+
+
+###  https://www.gsi.upm.es/ontologies/audit-mls#characteristic02_dataset01
+:characteristic02_dataset01 rdf:type owl:NamedIndividual ,
+                                     :NumberOfInstances ;
+                            mls:hasValue "1000000"^^xsd:int .
+
+
+###  https://www.gsi.upm.es/ontologies/audit-mls#dataset01
+:dataset01 rdf:type owl:NamedIndividual ,
+                    mls:Dataset ;
+           mls:hasQuality :characteristic01_dataset01 ,
+                          :characteristic02_dataset01 ;
+           :hasFeature :feature01_dataset01 ,
+                       :feature02_dataset01 ;
+           :hasTargetFeature :feature03_dataset01 ;
+           :datasetName "Dataset Emotion Analysis" .
+
+
+###  https://www.gsi.upm.es/ontologies/audit-mls#feature01_dataset01
+:feature01_dataset01 rdf:type owl:NamedIndividual ,
+                              mls:Feature ;
+                     mls:hasQuality :characteristic01_feature01 ;
+                     :featureName "id" .
+
+
+###  https://www.gsi.upm.es/ontologies/audit-mls#feature02_dataset01
+:feature02_dataset01 rdf:type owl:NamedIndividual ;
+                     mls:hasQuality :characteristic01_feature02 ;
+                     :featureName "text" .
+
+
+###  https://www.gsi.upm.es/ontologies/audit-mls#feature03_dataset01
+:feature03_dataset01 rdf:type owl:NamedIndividual ;
+                     mls:hasQuality :category01_feature03 ,
+                                    :category02_feature03 ,
+                                    :characteristic01_feature03 ;
+                     :featureName "emotion" .
+
+
+###  Generated by the OWL API (version 4.5.26.2023-07-17T20:34:13Z) https://github.com/owlcs/owlapi
